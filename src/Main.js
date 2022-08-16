@@ -5,6 +5,7 @@ import {
   emailValidator,
 } from './utils/Validator';
 
+import styled from 'styled-components';
 import axios from 'axios';
 
 function Main() {
@@ -28,19 +29,24 @@ function Main() {
   const checkEmail = () => {
     if (!emailValidator(info.email)) {
       setEmailErr(true);
+    } else {
+      setEmailErr(false);
     }
   };
 
   const checkPassword = () => {
     if (!passwordValidator(info.password)) {
       setPasswordErr(true);
+    } else {
+      setPasswordErr(false);
     }
   };
 
   const checkMatchPassword = () => {
-    if (!passwordMatchValidator(info.password)) {
+    if (!passwordMatchValidator(info.password, info.passwordCheck)) {
       setPasswordCheckErr(true);
-      return true;
+    } else {
+      setPasswordCheckErr(false);
     }
   };
 
@@ -96,7 +102,7 @@ function Main() {
       .then((res) => {
         console.log(res);
         alert('회원가입에 성공했습니다.');
-        //! 메인 페이지로 이동
+        window.location.replace('/');
       });
     // .catch((err) => {
     //   console.error(err);
@@ -116,6 +122,7 @@ function Main() {
           onChange={handleInputValue('email')}
           placeholder='example@example.com'
         />
+        {emailErr ? <div>이메일 형식에 맞게 입력해주세요.</div> : null}
       </div>
       <div>
         비밀번호
@@ -123,6 +130,9 @@ function Main() {
           onChange={handleInputValue('password')}
           placeholder='8자 이상의 영문, 숫자를 입력해주세요.'
         />
+        {passwordErr ? (
+          <div>비밀번호는 8자 이상의 영문, 숫자가 포함되어야 합니다.</div>
+        ) : null}
       </div>
       {signupMode ? null : (
         <button onClick={handleLogin} type='button'>
@@ -142,12 +152,22 @@ function Main() {
           <button onClick={handleSignup} type='button'>
             Signup
           </button>
+          {passwordCheckErr ? <div>비밀번호가 다릅니다.</div> : null}
         </>
       ) : null}
-      <div>
-        <span>회원이 아니라면?</span>
-        <button onClick={() => setSignupMode(true)}>회원가입</button>
-      </div>
+      {signupMode ? (
+        <div>
+          <span>이미 회원이신가요?</span>
+          <button onClick={() => setSignupMode(false)}>로그인 하러 가기</button>
+        </div>
+      ) : (
+        <div>
+          <span>회원이 아니라면?</span>
+          <button onClick={() => setSignupMode(true)}>
+            회원가입 하러 가기
+          </button>
+        </div>
+      )}
     </>
   );
 }
