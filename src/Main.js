@@ -69,7 +69,7 @@ function Main() {
       )
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
-        //! /todo로 이동
+        window.location.replace('/todo');
         console.log(res);
       })
       .catch((err) => {
@@ -107,12 +107,13 @@ function Main() {
     // .catch((err) => {
     //   console.error(err);
     // });
-    // fin@fin.com / finfin12
+    //
   };
 
   return (
     <>
       <h1>"The Best Todos Ever"</h1>
+      <div>fin@fin.com / finfin12</div>
       {signupMode ? <h2>회원가입</h2> : <h2>로그인</h2>}
 
       <div>
