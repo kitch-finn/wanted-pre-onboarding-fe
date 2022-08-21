@@ -5,12 +5,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 function Todo() {
-  const [todos, setTodos] = useState({
-    id: '',
-    todo: '',
-    isCompleted: false,
-    userId: '',
-  });
+  const [todos, setTodos] = useState([]);
   const [todoBody, setTodoBody] = useState('');
 
   const handleInputValue = (e) => {
@@ -47,11 +42,12 @@ function Todo() {
       )
       .then((res) => {
         console.log(res);
+        loadTodos();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
-
-  const updateTodo = () => {};
-  const deleteTodo = () => {};
 
   useEffect(() => {
     loadTodos();
@@ -64,16 +60,16 @@ function Todo() {
         <div>
           <div>Add Todo</div>
           <input
+            type='submit'
             onChange={handleInputValue}
             placeholder='추가할 내용을 입력해주세요'
           />
           <button onClick={createTodo}>추가</button>
         </div>
-        <TodoList todo={todos} />
-
-        <div>Todo List</div>
         <div>
-          <div>투두 내용</div>
+          {todos.map((todo) => {
+            return <TodoList todo={todo} key={todo.id} />;
+          })}
         </div>
       </div>
     </>
