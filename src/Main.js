@@ -203,7 +203,7 @@ function Main() {
       <div>
         <MainContainer>
           <H1>"The Best Todos Ever"</H1>
-          <div>fin@fin.com / finfin12</div>
+          {/* <div>fin@fin.com / finfin12</div> */}
           {signupMode ? <H2>회원가입</H2> : <H2>로그인</H2>}
 
           <div>
